@@ -1,0 +1,2 @@
+# Ignore classes generated from OpenAPI specs
+.*com\.backbase\.c3\.storage\.api\.v1.*

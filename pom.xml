@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <artifactId>service-sdk-starter-core</artifactId>
+        <groupId>com.backbase.buildingblocks</groupId>
+        <relativePath />
+        <version>16.1.7</version>
+    </parent>
+
+    <groupId>com.backbase</groupId>
+    <artifactId>google-blob-storage-connector</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Backbase :: google-blob-storage-connector</name>
+    <description>Backbase - Google Blob Storage Connector</description>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <enforce-banned-dependencies.skip>true</enforce-banned-dependencies.skip>
+        <bb-bom.version>2024.03.35-LTS</bb-bom.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <testcontainers.version>1.17.3</testcontainers.version>
+        <checkstyle.config.location>google_checks_javadocs.xml</checkstyle.config.location>
+        <!-- Checkstyle -->
+        <checkstyle.disable.checks>false</checkstyle.disable.checks>
+        <checkstyle.fail-on-violation>false</checkstyle.fail-on-violation>
+        <checkstyle.fails-on-error>false</checkstyle.fails-on-error>
+        <checkstyle.version>10.3.1</checkstyle.version>
+        <sonar.coverage.exclusions>
+            **/com/backbase/blob/storage/connector/Application.java
+        </sonar.coverage.exclusions>
+        <ssdk-checkstyle-config.version>1.0.22</ssdk-checkstyle-config.version>
+        <spring-cloud-gcp.version>5.5.0</spring-cloud-gcp.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.backbase</groupId>
+                <artifactId>backbase-bom</artifactId>
+                <version>${bb-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>spring-cloud-gcp-dependencies</artifactId>
+                <version>${spring-cloud-gcp.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>spring-cloud-gcp-starter-storage</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <groupId>org.openapitools</groupId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>auth-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.dbs.audit</groupId>
+            <artifactId>audit-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <artifactId>service-sdk-starter-test</artifactId>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-spec</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.backbase.cxp</groupId>
+                                    <artifactId>contentservices</artifactId>
+                                    <classifier>api</classifier>
+                                    <type>zip</type>
+                                    <outputDirectory>${project.build.directory}/specs</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.backbase.oss</groupId>
+                <artifactId>boat-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>${project.basedir}/target/specs/contentservices/contentservices-c3-integration-outbound-api-v*.yaml</inputSpec>
+                            <apiPackage>com.backbase.c3.storage.api.v1</apiPackage>
+                            <modelPackage>com.backbase.c3.storage.api.v1.model</modelPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

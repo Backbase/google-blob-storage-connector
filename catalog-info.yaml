@@ -1,0 +1,48 @@
+      apiVersion: backstage.io/v1alpha1
+      kind: Component
+      metadata:
+        name: google-blob-storage-connector
+        description: |
+          Backbase provides an out-of-the-box content connector for Azure blob.
+        annotations:
+          jira/maint-component: CX6
+          jira/maint-subcomponent: Content Services
+          jira/project-key: CORS
+          backbase/build-job-link: https://jenkins.backbase.eu/job/CX/job/CXP-CM/job/azure-blob-storage-connector/
+          sonarqube.org/project-key: cloud/backbase-rnd_cxp-cm-content-services-connector-azure-blob
+          backbase/community: foundation_services/:how_to_use_blob_storage_connector
+          slack/conversation-id: CLQTN3GVD
+          blackduck/project-name: google-blob-storage-connector
+          jfrog/release-name: google-blob-storage-connector
+          jfrog/release-repo: backbase-6-release
+          jfrog/release-path: com/backbase
+        tags:
+          - java
+          - spring
+          - ssdk
+        links:
+          - url: https://community.backbase.com/documentation/foundation_services/latest/how_to_use_blob_storage_connector
+            title: Community
+            icon: help
+          - url: https://jenkins.backbase.eu/job/CX/job/CXP-CM/job/content-services-connector-azure-blob/
+            title: Jenkins
+            icon: cloud
+          - url: https://sonarcloud.io/project/overview?id=backbase-rnd_cxp-cm-content-services-connector-azure-blob
+            title: SonarCloud
+            icon: dashboard
+          - url: https://backbase.blackducksoftware.com/api/projects/96e0e423-ca5f-42db-80bc-35788e4eb84f
+            title: BlackDuck
+            icon: dashboard
+          - url: https://repo.backbase.com/ui/native/backbase-6-release/com/backbase/azure-blob-storage-connector/
+            title: Maven artifacts
+            icon: dashboard
+          - url: https://backbase.atlassian.net/wiki/spaces/DE/pages/2374926367/Team+Core+Services
+            title: Confluence
+            icon: help
+      spec:
+        subcomponentOf: document-storage-bom
+        type: service
+        lifecycle: production
+        owner: DE - Devengers
+        consumesApis:
+          - contentservices-c3-integration-outbound-api-v2

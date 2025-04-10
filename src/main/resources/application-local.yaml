@@ -1,0 +1,35 @@
+backbase:
+  azure:
+    blob:
+      storage:
+        connector:
+          defaultAccount: account3
+          accounts:
+            account1:
+              connectionString: AccountName=account1;AccountKey=key1;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/account1;QueueEndpoint=http://127.0.0.1:10001/account1;TableEndpoint=http://127.0.0.1:10002/account1;
+            account2:
+              connectionString: AccountName=account2;AccountKey=key2;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/account2;QueueEndpoint=http://127.0.0.1:10001/account2;TableEndpoint=http://127.0.0.1:10002/account2;
+            account3:
+              connectionString: AccountName=account3;AccountKey=key3;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/account3;QueueEndpoint=http://127.0.0.1:10001/account3;TableEndpoint=http://127.0.0.1:10002/account3;
+          repositories:
+            repository1:
+              account_name: account1
+              container_name: container1
+            repository2:
+              account_name: account2
+              container_name: container2
+            repository3:
+              container_name: container3
+          create_container_if_missing: false
+
+  security:
+    public:
+      paths:
+        - /**
+  audit:
+    enabled: false
+  events:
+    enabled: false
+spring:
+  zipkin:
+    enabled: false
