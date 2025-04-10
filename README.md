@@ -1,12 +1,6 @@
 ![](logo.svg)
 
-[![Jenkins][jenkins-image]][jenkins-url]
-[![Pull Requests][pr-image]][pr-url]
-[![Slack][slack-image]][slack-url]
-[![Contributors][contributors-image]][contributors-url]
-[![Issue][issue-image]][issue-url]
-
-##   google-blob-storage-connector
+##  google-blob-storage-connector
 
 
 ## Documentation
@@ -15,13 +9,17 @@ For a better understanding of how to configure and operate this project please r
 If you need to understand how the component works under the hood, nothing beats having a peek at the code.
 
 1. [Understanding   google-blob-storage-connector][understand-project-url]
-2. [  google-blob-storage-connector configuration][project-config-url]
+2. [  Deployment configuration][project-config-url]
 
 [understand-project-url]: #
+## Understanding google-blob-storage-connector
+Build a contentservices connector to upload files to Google storage
+
 [project-config-url]: #
+## Deployment Configuration
 
-
-### config google credentials and file size limit
+### google-blob-storage-connector
+Config google credentials and file size limit
 ````yaml
   env:
     spring.servlet.multipart.max-file-size: 10MB
@@ -44,8 +42,7 @@ If you need to understand how the component works under the hood, nothing beats 
 ````
 
 
-### contentservices config 
-
+### contentservices
 ````yaml
   env:
     contentservices.storage.connectors.gcpStorage.service: google-blob-storage-connector
