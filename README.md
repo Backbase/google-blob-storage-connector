@@ -19,7 +19,7 @@ Build a contentservices connector to upload files to Google storage
 ## Deployment Configuration
 
 ### google-blob-storage-connector
-Config google credentials and file size limit
+Config google credentials key stored in a mounted volumn and file size limit
 ````yaml
   env:
     spring.servlet.multipart.max-file-size: 10MB
@@ -27,15 +27,11 @@ Config google credentials and file size limit
     GOOGLE_APPLICATION_CREDENTIALS: "/var/secrets/google/key.json"
 
   volumes:
-    - name: apm-agent
-      emptyDir: {}
     - name: gcp-ekyc-sa-creds
       secret:
       secretName: gcp-ekyc-sa-creds
     
   volumeMounts:
-    - name: apm-agent
-      mountPath: /tmp/apm-agent
     - name: gcp-ekyc-sa-creds
       mountPath: /var/secrets/google
       readOnly: true
